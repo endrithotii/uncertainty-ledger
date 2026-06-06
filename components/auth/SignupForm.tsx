@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
@@ -16,6 +17,7 @@ export function SignupForm() {
   const [orgName, setOrgName] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [confirmationSent, setConfirmationSent] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -38,8 +40,25 @@ export function SignupForm() {
       return
     }
 
-    router.push("/dashboard")
-    router.refresh()
+    // If session is immediately available (email confirmation disabled), go to dashboard
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session) {
+      router.push("/dashboard")
+      router.refresh()
+    } else {
+      // Email confirmation required — show message
+      setConfirmationSent(true)
+      setLoading(false)
+    }
+  }
+
+  if (confirmationSent) {
+    return (
+      <div className="text-center space-y-3 p-6 bg-green-50 rounded-lg border border-green-200">
+        <p className="font-medium text-green-800">Check your email</p>
+        <p className="text-sm text-green-700">We sent a confirmation link to <strong>{email}</strong>. Click it to activate your account and log in.</p>
+      </div>
+    )
   }
 
   return (
