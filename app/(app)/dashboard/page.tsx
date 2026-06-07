@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 import Link from "next/link"
-import { createClient } from "@/lib/supabase/server"
+import { createClient, createServiceClient } from "@/lib/supabase/server"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { RiskMeter } from "@/components/dashboard/RiskMeter"
@@ -14,7 +14,10 @@ export default async function DashboardPage() {
   if (!user) redirect("/login")
 
   // Get org membership
-  const { data: memberships } = await supabase
+  // Use service client to bypass RLS for all server-side reads
+  const service = createServiceClient()
+
+  const { data: memberships } = await service
     .from("organization_members")
     .select("org_id")
     .eq("user_id", user.id)
@@ -23,8 +26,7 @@ export default async function DashboardPage() {
   const membership = memberships?.[0] ?? null
   if (!membership) redirect("/onboarding")
 
-  // Get org details separately (avoids join type issues before supabase gen types)
-  const { data: org } = await supabase
+  const { data: org } = await service
     .from("organizations")
     .select("id, name, slug")
     .eq("id", membership.org_id)
@@ -32,7 +34,7 @@ export default async function DashboardPage() {
 
   if (!org) redirect("/onboarding")
 
-  const { data: projects } = await supabase
+  const { data: projects } = await service
     .from("projects")
     .select("*")
     .eq("org_id", org.id)
@@ -41,7 +43,7 @@ export default async function DashboardPage() {
 
   const projectsWithRisk = await Promise.all(
     (projects ?? []).map(async project => {
-      const { data: unknowns } = await supabase
+      const { data: unknowns } = await service
         .from("unknowns")
         .select("*")
         .eq("project_id", project.id)
