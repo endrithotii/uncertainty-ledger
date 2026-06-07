@@ -152,6 +152,12 @@ export type Database = {
         Update: { id?: string; project_id?: string; token?: string; created_by?: string; expires_at?: string | null; created_at?: string }
         Relationships: []
       }
+      waitlist: {
+        Row: { id: string; email: string; role: string | null; company: string | null; created_at: string }
+        Insert: { id?: string; email: string; role?: string | null; company?: string | null; created_at?: string }
+        Update: { id?: string; email?: string; role?: string | null; company?: string | null; created_at?: string }
+        Relationships: []
+      }
     }
     Views: { [_ in never]: never }
     Functions: { [_ in never]: never }
