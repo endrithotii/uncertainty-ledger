@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -18,34 +17,16 @@ export default function OnboardingPage() {
     setLoading(true)
     setError(null)
 
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    const res = await fetch("/api/onboard", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ orgName }),
+    })
 
-    if (!user) {
-      router.push("/login")
-      return
-    }
+    const data = await res.json()
 
-    const slug = orgName.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + user.id.slice(0, 8)
-
-    const { data: org, error: orgErr } = await supabase
-      .from("organizations")
-      .insert({ name: orgName.trim(), slug })
-      .select("id")
-      .single()
-
-    if (orgErr || !org) {
-      setError(orgErr?.message ?? "Failed to create workspace")
-      setLoading(false)
-      return
-    }
-
-    const { error: memberErr } = await supabase
-      .from("organization_members")
-      .insert({ org_id: org.id, user_id: user.id, role: "owner" })
-
-    if (memberErr) {
-      setError(memberErr.message)
+    if (!res.ok) {
+      setError(data.error ?? "Something went wrong")
       setLoading(false)
       return
     }
@@ -73,7 +54,7 @@ export default function OnboardingPage() {
             />
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="w-full" disabled={loading || !orgName.trim()}>
             {loading ? "Creating…" : "Create workspace"}
           </Button>
         </form>
