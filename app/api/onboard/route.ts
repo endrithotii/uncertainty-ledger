@@ -29,7 +29,7 @@ export async function POST(request: Request) {
   }
 
   // Use service client to bypass RLS for org creation
-  const service = await createServiceClient()
+  const service = createServiceClient()
 
   const slug = orgName.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-")
     + "-" + user.id.slice(0, 8)

@@ -20,7 +20,7 @@ const CRIT_VARIANT = { low: "secondary", medium: "moderate", high: "elevated", c
 
 export default async function PublicReportPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params
-  const supabase = await createServiceClient()
+  const supabase = createServiceClient()
 
   const { data: reportToken } = await supabase
     .from("report_tokens")
