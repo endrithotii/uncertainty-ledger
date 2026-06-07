@@ -14,13 +14,13 @@ export default async function DashboardPage() {
   if (!user) redirect("/login")
 
   // Get org membership
-  const { data: membership } = await supabase
+  const { data: memberships } = await supabase
     .from("organization_members")
     .select("org_id")
     .eq("user_id", user.id)
     .limit(1)
-    .single()
 
+  const membership = memberships?.[0] ?? null
   if (!membership) redirect("/onboarding")
 
   // Get org details separately (avoids join type issues before supabase gen types)

@@ -9,13 +9,13 @@ export default async function NewProjectPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect("/login")
 
-  const { data: membership } = await supabase
+  const { data: memberships } = await supabase
     .from("organization_members")
     .select("org_id")
     .eq("user_id", user.id)
     .limit(1)
-    .single()
 
+  const membership = memberships?.[0] ?? null
   if (!membership) redirect("/onboarding")
 
   const mem = membership as { org_id: string }
