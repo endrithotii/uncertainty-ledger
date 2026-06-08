@@ -254,41 +254,59 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── THE ALGORITHM ── */}
+      {/* ── THE SCORE ── */}
       <section style={{ background: "#0a0a14", borderTop: "1px solid #1c1c2e", borderBottom: "1px solid #1c1c2e" }}>
         <div className="max-w-6xl mx-auto px-6 py-20">
-          <div className="grid lg:grid-cols-2 gap-16">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <p className="text-xs font-mono uppercase tracking-widest mb-6" style={{ color: "#3d3d5c" }}>
                 — The score is explainable
               </p>
               <h2 className="font-bold mb-6" style={{ fontSize: "2rem", color: "#f5f5f7", letterSpacing: "-0.02em" }}>
-                Not AI. Not a black box. Expert rules — built from 40 years of watching projects fail.
+                Not AI. Not a black box.<br />Built from 40 years of watching projects fail in the same patterns.
               </h2>
-              <p style={{ color: "#8b8ba7" }} className="leading-relaxed text-sm">
-                Every point in the risk score traces back to a specific unknown in your project. You can see exactly why the score is what it is. That transparency is not a feature — it&apos;s the product. A number you can&apos;t explain is a number nobody trusts.
+              <p style={{ color: "#8b8ba7" }} className="leading-relaxed mb-6">
+                Every point in the risk score traces back to a specific unknown in your project. You always know why the number is what it is.
+              </p>
+              <p style={{ color: "#8b8ba7" }} className="leading-relaxed mb-6">
+                The score accounts for what you don&apos;t know, how quickly unknowns are accumulating, where they cluster, and how much time you have left to resolve them. It compounds the way real risk does — not linearly.
+              </p>
+              <p style={{ color: "#5a5a7a" }} className="leading-relaxed text-sm italic">
+                &ldquo;A number you can&apos;t explain is a number nobody trusts. The calibration is ours — the reasoning is always yours to see.&rdquo;
               </p>
             </div>
-            <div style={{ fontFamily: "var(--font-geist-mono)", background: "#06060f", border: "1px solid #1c1c2e" }} className="p-6 text-sm">
-              <p className="mb-4 text-xs uppercase tracking-widest" style={{ color: "#3d3d5c" }}>risk_score.ts</p>
-              {[
-                { label: "CRITICAL unknown", pts: "+20 pts", note: "blocks delivery if unresolved", color: "#ff4d00" },
-                { label: "HIGH unknown", pts: "+10 pts", note: "significant scope or timeline impact", color: "#f97316" },
-                { label: "MEDIUM unknown", pts: "+5 pts", note: "notable risk, manageable", color: "#eab308" },
-                { label: "CLUSTER penalty", pts: "+15 pts", note: "3+ unknowns in same area, avg criticality ≥ high", color: "#a855f7" },
-                { label: "TRAJECTORY", pts: "× 1.3", note: "accumulating faster than resolving (last 7 days)", color: "#3b82f6" },
-                { label: "TIME PRESSURE", pts: "× 1.2", note: "< 30 days to deadline AND score > 40", color: "#ef4444" },
-              ].map(row => (
-                <div key={row.label} className="flex items-start gap-4 py-2.5" style={{ borderBottom: "1px solid #1c1c2e" }}>
-                  <span className="font-bold w-16 flex-shrink-0 text-right" style={{ color: row.color }}>{row.pts}</span>
-                  <div>
-                    <span className="text-xs" style={{ color: "#f5f5f7" }}>{row.label}</span>
-                    <span className="text-xs ml-2" style={{ color: "#3d3d5c" }}>// {row.note}</span>
-                  </div>
+
+            {/* Risk score visual — hint, not reveal */}
+            <div style={{ border: "1px solid #1c1c2e", background: "#06060f", fontFamily: "var(--font-geist-mono)" }} className="p-8">
+              <p className="text-xs uppercase tracking-widest mb-6" style={{ color: "#3d3d5c" }}>
+                Example — Payment Gateway Project
+              </p>
+              <div className="flex items-end gap-4 mb-6">
+                <span className="font-bold" style={{ fontSize: "4.5rem", color: "#ff4d00", lineHeight: 1, letterSpacing: "-0.04em" }}>74</span>
+                <div className="pb-2">
+                  <p className="font-bold text-sm uppercase tracking-widest" style={{ color: "#ff4d00" }}>HIGH RISK</p>
+                  <p className="text-xs mt-1" style={{ color: "#5a5a7a" }}>↑ +12 this week</p>
                 </div>
-              ))}
-              <p className="mt-4 text-xs" style={{ color: "#3d3d5c" }}>
-                final = <span style={{ color: "#f5f5f7" }}>min(100, base × trajectory × time_pressure + clusters)</span>
+              </div>
+              <div className="space-y-3 mb-6">
+                {[
+                  { label: "Open unknowns", val: "11", note: "3 critical" },
+                  { label: "Trajectory", val: "↑", note: "accumulating faster than resolving" },
+                  { label: "Highest cluster", val: "Integration", note: "5 unknowns, avg criticality: high" },
+                  { label: "Days to deadline", val: "23", note: "time pressure active" },
+                ].map(row => (
+                  <div key={row.label} className="flex justify-between items-start py-2" style={{ borderBottom: "1px solid #1c1c2e" }}>
+                    <span className="text-xs" style={{ color: "#5a5a7a" }}>{row.label}</span>
+                    <div className="text-right">
+                      <span className="text-xs font-bold" style={{ color: "#f5f5f7" }}>{row.val}</span>
+                      <span className="text-xs ml-2" style={{ color: "#3d3d5c" }}>{row.note}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs leading-relaxed" style={{ color: "#5a5a7a" }}>
+                <span style={{ color: "#ff4d00" }}>Assessment: </span>
+                Elevated risk with 23 days remaining. The integration cluster is the primary driver. Teams with this profile at this stage historically experience significant timeline changes.
               </p>
             </div>
           </div>
