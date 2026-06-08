@@ -1,396 +1,369 @@
-"use client"
-
-import { useState } from "react"
+import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, BarChart3, AlertTriangle, Share2, ChevronDown, Check } from "lucide-react"
+import { WaitlistForm } from "@/components/marketing/WaitlistForm"
 
-function WaitlistForm() {
-  const [email, setEmail] = useState("")
-  const [role, setRole] = useState("")
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
-
-    const res = await fetch("/api/waitlist", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, role }),
-    })
-
-    if (!res.ok) {
-      const data = await res.json()
-      setError(data.error ?? "Something went wrong")
-      setLoading(false)
-      return
-    }
-
-    setSubmitted(true)
-    setLoading(false)
-  }
-
-  if (submitted) {
-    return (
-      <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-xl px-6 py-4">
-        <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-          <Check className="h-4 w-4 text-white" />
-        </div>
-        <div>
-          <p className="font-semibold text-green-900">You&apos;re on the list.</p>
-          <p className="text-sm text-green-700">We&apos;ll reach out personally when your spot is ready.</p>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-3 w-full max-w-md">
-      <input
-        type="email"
-        placeholder="your@email.com"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        required
-        className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 bg-white"
-      />
-      <select
-        value={role}
-        onChange={e => setRole(e.target.value)}
-        className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 bg-white text-slate-600"
-      >
-        <option value="">Your role (optional)</option>
-        <option value="cto">CTO / VP Engineering</option>
-        <option value="director">Director / Head of Engineering</option>
-        <option value="em">Engineering Manager</option>
-        <option value="pm">Product Manager</option>
-        <option value="engineer">Senior Engineer / Tech Lead</option>
-        <option value="founder">Founder</option>
-        <option value="other">Other</option>
-      </select>
-      {error && <p className="text-sm text-red-600">{error}</p>}
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-slate-900 text-white py-3 px-6 rounded-xl font-semibold text-sm hover:bg-slate-800 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
-      >
-        {loading ? "Joining…" : <>Request early access <ArrowRight className="h-4 w-4" /></>}
-      </button>
-      <p className="text-xs text-slate-400 text-center">No credit card. No spam. Just a heads-up when you&apos;re in.</p>
-    </form>
-  )
+export const metadata: Metadata = {
+  title: "Know what you don't know before it's too late",
+  description:
+    "Uncertainty Ledger tracks the unresolved unknowns in your software projects — before they become the reason you're standing in a room explaining why the launch slipped.",
 }
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Nav */}
-      <nav className="border-b border-slate-100 px-6 py-4 sticky top-0 bg-white/90 backdrop-blur z-10">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-slate-900 rounded-lg flex items-center justify-center">
-              <AlertTriangle className="h-4 w-4 text-white" />
-            </div>
-            <span className="font-bold text-slate-900">Uncertainty Ledger</span>
+    <div style={{ background: "#06060f", color: "#f5f5f7", fontFamily: "var(--font-geist-sans)" }} className="min-h-screen">
+
+      {/* ── NAV ── */}
+      <nav style={{ borderBottom: "1px solid #1c1c2e" }} className="px-6 py-4 sticky top-0 z-50" >
+        <div style={{ background: "#06060f" }} className="absolute inset-0" />
+        <div className="max-w-6xl mx-auto flex items-center justify-between relative">
+          <div className="flex items-center gap-3">
+            <div style={{ background: "#ff4d00", width: 8, height: 8 }} />
+            <span className="text-sm font-bold tracking-widest uppercase" style={{ color: "#f5f5f7", letterSpacing: "0.15em" }}>
+              Uncertainty Ledger
+            </span>
           </div>
-          <div className="flex gap-3">
-            <Link href="/login" className="text-sm text-slate-600 hover:text-slate-900 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors">
-              Sign in
-            </Link>
-          </div>
+          <Link
+            href="/login"
+            className="text-xs uppercase tracking-widest hover:text-white transition-colors"
+            style={{ color: "#3d3d5c", letterSpacing: "0.12em" }}
+          >
+            Sign in
+          </Link>
         </div>
       </nav>
 
-      <main>
+      {/* ── HERO ── */}
+      <section className="max-w-6xl mx-auto px-6 pt-24 pb-20">
+        <div style={{ color: "#ff4d00" }} className="text-xs font-mono uppercase tracking-widest mb-8 flex items-center gap-3">
+          <span style={{ background: "#ff4d00", width: 6, height: 6, display: "inline-block" }} />
+          Limited early access — Q3 2026
+        </div>
 
-        {/* Hero */}
-        <section className="max-w-4xl mx-auto px-6 pt-20 pb-16 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium mb-8">
-            <AlertTriangle className="h-3.5 w-3.5" />
-            Early access — limited spots
-          </div>
+        <h1
+          className="font-bold leading-none mb-8"
+          style={{
+            fontSize: "clamp(2.8rem, 7vw, 6rem)",
+            letterSpacing: "-0.03em",
+            color: "#f5f5f7",
+            maxWidth: "900px",
+          }}
+        >
+          Every project failure
+          you&apos;ve ever had
+          <span style={{ color: "#ff4d00" }}> was predictable.</span>
+        </h1>
 
-          <h1 className="text-5xl sm:text-6xl font-bold tracking-tight text-slate-900 leading-[1.1] mb-6">
-            Stop being blindsided<br />by your own projects.
-          </h1>
+        <p
+          className="mb-4 leading-relaxed"
+          style={{ color: "#8b8ba7", fontSize: "1.2rem", maxWidth: "600px" }}
+        >
+          Not because your engineers were bad.
+          Not because of bad code or bad luck.
+          Because of questions nobody answered.
+          Assumptions nobody validated.
+          Decisions that kept getting deferred.
+        </p>
+        <p
+          className="mb-12 leading-relaxed"
+          style={{ color: "#8b8ba7", fontSize: "1.2rem", maxWidth: "600px" }}
+        >
+          They pile up silently. And then, in month 8, they arrive all at once —
+          in a meeting you weren&apos;t ready for.
+        </p>
 
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed mb-4">
-            Every project failure has warning signs. They were always there —
-            nobody was tracking them.
-          </p>
-          <p className="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mb-10">
-            Uncertainty Ledger tracks what your team <em>doesn&apos;t know</em>,
-            scores the risk in real time, and gives you one link to brief anyone —
-            from your team to your CEO — in under 60 seconds.
-          </p>
+        <WaitlistForm dark />
+      </section>
 
-          <div className="flex justify-center">
-            <WaitlistForm />
-          </div>
-        </section>
-
-        {/* The real problem */}
-        <section className="bg-slate-900 text-white py-20 px-6">
-          <div className="max-w-4xl mx-auto">
-            <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-4">The problem nobody admits</p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-10 max-w-2xl">
-              Two kinds of debt. Only one gets tracked.
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
-              <div className="space-y-3 p-6 rounded-xl bg-slate-800">
-                <p className="font-semibold text-slate-300 text-sm uppercase tracking-wide">Technical debt</p>
-                <p className="text-slate-400 leading-relaxed">
-                  Everyone talks about it. Tools measure it. Jira tracks it.
-                  It&apos;s visible, debatable, and occasionally addressed.
-                </p>
-              </div>
-              <div className="space-y-3 p-6 rounded-xl bg-amber-900/40 border border-amber-700/40">
-                <p className="font-semibold text-amber-400 text-sm uppercase tracking-wide">Epistemic debt ← this one kills projects</p>
-                <p className="text-slate-300 leading-relaxed">
-                  Unresolved unknowns. Untested assumptions. Deferred decisions.
-                  Nobody tracks it. It grows silently. It&apos;s what actually ends projects.
-                </p>
-              </div>
-            </div>
-            <blockquote className="border-l-4 border-amber-400 pl-6">
-              <p className="text-slate-300 text-lg leading-relaxed italic">
-                &ldquo;The database that couldn&apos;t handle load in month 8 was an unknown assumption in month 2.
-                The integration that took 6 weeks had warning signs at kickoff.
-                The signals were always there. Nobody was watching them.&rdquo;
+      {/* ── THE MOMENT ── */}
+      <section style={{ borderTop: "1px solid #1c1c2e", borderBottom: "1px solid #1c1c2e" }}>
+        <div className="max-w-6xl mx-auto px-6 py-20">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+              <p className="text-xs font-mono uppercase tracking-widest mb-6" style={{ color: "#3d3d5c" }}>
+                — The moment every engineering leader recognizes
               </p>
-            </blockquote>
+              <blockquote
+                className="font-bold leading-snug"
+                style={{ fontSize: "clamp(1.4rem, 3vw, 2.2rem)", color: "#f5f5f7", letterSpacing: "-0.02em" }}
+              >
+                &ldquo;We should have known this was coming in month 3.&rdquo;
+              </blockquote>
+            </div>
+            <div style={{ borderLeft: "1px solid #1c1c2e", paddingLeft: "3rem" }}>
+              <p className="leading-relaxed mb-4" style={{ color: "#8b8ba7" }}>
+                The database that couldn&apos;t handle load in month 8? That was an unvalidated assumption in month 2. The integration that took 6 weeks instead of 3 days? The signal was there at kickoff — buried in a Slack thread nobody referenced again.
+              </p>
+              <p className="leading-relaxed" style={{ color: "#8b8ba7" }}>
+                The problem was never that your team was blind. The problem was there was no system to make the invisible visible — to track what you didn&apos;t know, watch it accumulate, and surface it before options close.
+              </p>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Use case scenarios */}
-        <section className="max-w-5xl mx-auto px-6 py-20">
-          <p className="text-slate-500 text-sm font-semibold uppercase tracking-widest mb-4 text-center">Real scenarios</p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 text-center mb-4">
-            The conversation that happens every week
-          </h2>
-          <p className="text-slate-500 text-center max-w-xl mx-auto mb-16">
-            At every company. At every level. The same problem — no shared language for uncertainty.
+      {/* ── TWO DEBTS ── */}
+      <section className="max-w-6xl mx-auto px-6 py-20">
+        <p className="text-xs font-mono uppercase tracking-widest mb-12" style={{ color: "#3d3d5c" }}>
+          — The debt nobody measures
+        </p>
+        <div className="grid md:grid-cols-2 gap-px" style={{ background: "#1c1c2e" }}>
+          <div style={{ background: "#06060f" }} className="p-8">
+            <p className="text-xs font-mono uppercase tracking-widest mb-4" style={{ color: "#3d3d5c" }}>
+              Technical debt
+            </p>
+            <p className="font-bold text-xl mb-4" style={{ color: "#f5f5f7" }}>Tracked. Measured. Debated.</p>
+            <p style={{ color: "#8b8ba7" }} className="leading-relaxed">
+              Every engineering team talks about it. There are tools, dashboards, sprints dedicated to it. It&apos;s visible, arguable, politically manageable. It&apos;s also rarely what actually kills projects.
+            </p>
+          </div>
+          <div style={{ background: "#0e0e17" }} className="p-8">
+            <p className="text-xs font-mono uppercase tracking-widest mb-4" style={{ color: "#ff4d00" }}>
+              Epistemic debt ← this one kills projects
+            </p>
+            <p className="font-bold text-xl mb-4" style={{ color: "#f5f5f7" }}>Invisible. Unmeasured. Lethal.</p>
+            <p style={{ color: "#8b8ba7" }} className="leading-relaxed">
+              Unresolved questions. Untested assumptions. Deferred decisions. The things your team is collectively pretending will work out. Nobody tracks this. It compounds quietly. And it&apos;s responsible for the majority of project failures that catch leadership off guard.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── REAL CONVERSATIONS ── */}
+      <section style={{ background: "#0a0a14", borderTop: "1px solid #1c1c2e", borderBottom: "1px solid #1c1c2e" }}>
+        <div className="max-w-6xl mx-auto px-6 py-20">
+          <p className="text-xs font-mono uppercase tracking-widest mb-2" style={{ color: "#3d3d5c" }}>
+            — This conversation happens every week
+          </p>
+          <p className="font-bold mb-16" style={{ color: "#f5f5f7", fontSize: "1.5rem", letterSpacing: "-0.02em" }}>
+            At every company. At every level. And it always ends the same way.
           </p>
 
-          <div className="space-y-8">
-
-            {/* Scenario 1 */}
-            <div className="grid md:grid-cols-2 gap-6 items-start">
-              <div className="bg-red-50 border border-red-100 rounded-xl p-6 space-y-3">
-                <p className="text-xs font-semibold text-red-600 uppercase tracking-wide">Without Uncertainty Ledger</p>
-                <p className="text-sm font-semibold text-slate-800">CEO → VP Engineering</p>
-                <div className="space-y-2 text-sm">
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-red-100">
-                    <span className="font-medium">CEO:</span> &ldquo;How&apos;s the payment integration? Still Q3?&rdquo;
-                  </p>
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-red-100">
-                    <span className="font-medium">VP:</span> &ldquo;We&apos;re making progress, some challenges, the team is working through them.&rdquo;
-                  </p>
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-500 border border-red-100 italic text-xs">
-                    CEO hears: &ldquo;I don&apos;t actually know.&rdquo;
+          {/* Scenario 1 */}
+          <div className="mb-16">
+            <div className="flex items-center gap-4 mb-6">
+              <span className="font-mono text-xs" style={{ color: "#3d3d5c" }}>01</span>
+              <p className="font-bold text-sm uppercase tracking-widest" style={{ color: "#f5f5f7" }}>CEO → VP Engineering</p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-px" style={{ background: "#1c1c2e" }}>
+              <div style={{ background: "#0a0a14" }} className="p-8">
+                <p className="text-xs font-mono mb-4 uppercase tracking-widest" style={{ color: "#5a1a0a" }}>Without Uncertainty Ledger</p>
+                <div className="space-y-3 font-mono text-sm">
+                  <p><span style={{ color: "#3d3d5c" }}>CEO: </span><span style={{ color: "#f5f5f7" }}>&ldquo;Payment integration — still Q3?&rdquo;</span></p>
+                  <p><span style={{ color: "#3d3d5c" }}>VP:&nbsp; </span><span style={{ color: "#f5f5f7" }}>&ldquo;We&apos;re making progress. Some challenges. The team is working through them.&rdquo;</span></p>
+                  <p style={{ borderTop: "1px solid #1c1c2e", color: "#5a1a0a" }} className="text-xs mt-4 pt-4">
+                    CEO hears: &ldquo;I don&apos;t actually know.&rdquo; Trust erodes. Quietly.
                   </p>
                 </div>
               </div>
-              <div className="bg-green-50 border border-green-100 rounded-xl p-6 space-y-3">
-                <p className="text-xs font-semibold text-green-600 uppercase tracking-wide">With Uncertainty Ledger</p>
-                <p className="text-sm font-semibold text-slate-800">CEO → VP Engineering</p>
-                <div className="space-y-2 text-sm">
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-green-100">
-                    <span className="font-medium">CEO:</span> &ldquo;How&apos;s the payment integration? Still Q3?&rdquo;
-                  </p>
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-green-100">
-                    <span className="font-medium">VP:</span> &ldquo;Risk score is 67 — elevated. 5 open unknowns in the integration area. I&apos;ll send you the report.&rdquo;
-                  </p>
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-green-100 text-xs">
-                    CEO opens the link. Reads it in 60 seconds. Asks the right question.
+              <div style={{ background: "#0a150e" }} className="p-8">
+                <p className="text-xs font-mono mb-4 uppercase tracking-widest" style={{ color: "#00d97e" }}>With Uncertainty Ledger</p>
+                <div className="space-y-3 font-mono text-sm">
+                  <p><span style={{ color: "#3d3d5c" }}>CEO: </span><span style={{ color: "#f5f5f7" }}>&ldquo;Payment integration — still Q3?&rdquo;</span></p>
+                  <p><span style={{ color: "#3d3d5c" }}>VP:&nbsp; </span><span style={{ color: "#f5f5f7" }}>&ldquo;Risk score is 67 — elevated. 5 open unknowns in the integration area. Sending you the report now.&rdquo;</span></p>
+                  <p className="text-xs mt-4 pt-4" style={{ borderTop: "1px solid #1c1c2e", color: "#4a7c63" }}>
+                    CEO opens the link. Reads it in 60 seconds. Asks the right question. Trust built.
                   </p>
                 </div>
               </div>
             </div>
-
-            {/* Scenario 2 */}
-            <div className="grid md:grid-cols-2 gap-6 items-start">
-              <div className="bg-red-50 border border-red-100 rounded-xl p-6 space-y-3">
-                <p className="text-xs font-semibold text-red-600 uppercase tracking-wide">Without Uncertainty Ledger</p>
-                <p className="text-sm font-semibold text-slate-800">Engineer → Manager</p>
-                <div className="space-y-2 text-sm">
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-red-100">
-                    <span className="font-medium">Manager:</span> &ldquo;Are we on track for the demo Friday?&rdquo;
-                  </p>
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-red-100">
-                    <span className="font-medium">Engineer:</span> &ldquo;Should be fine… I mean, there are some things we haven&apos;t figured out yet.&rdquo;
-                  </p>
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-500 border border-red-100 italic text-xs">
-                    Friday arrives. It&apos;s not fine.
-                  </p>
-                </div>
-              </div>
-              <div className="bg-green-50 border border-green-100 rounded-xl p-6 space-y-3">
-                <p className="text-xs font-semibold text-green-600 uppercase tracking-wide">With Uncertainty Ledger</p>
-                <p className="text-sm font-semibold text-slate-800">Engineer → Manager</p>
-                <div className="space-y-2 text-sm">
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-green-100">
-                    <span className="font-medium">Manager:</span> &ldquo;Are we on track for the demo Friday?&rdquo;
-                  </p>
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-green-100">
-                    <span className="font-medium">Engineer:</span> &ldquo;We have 3 critical unknowns in the auth area. Two need your decision today or Friday is at risk.&rdquo;
-                  </p>
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-green-100 text-xs">
-                    Manager makes the decision Tuesday. Demo happens.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Scenario 3 */}
-            <div className="grid md:grid-cols-2 gap-6 items-start">
-              <div className="bg-red-50 border border-red-100 rounded-xl p-6 space-y-3">
-                <p className="text-xs font-semibold text-red-600 uppercase tracking-wide">Without Uncertainty Ledger</p>
-                <p className="text-sm font-semibold text-slate-800">VP Engineering → Board</p>
-                <div className="space-y-2 text-sm">
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-red-100">
-                    Board review. VP presents a 20-slide deck. 3 slides of Gantt charts. Nobody believes them.
-                  </p>
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-500 border border-red-100 italic text-xs">
-                    Board asks: &ldquo;What are the real risks?&rdquo; Awkward silence.
-                  </p>
-                </div>
-              </div>
-              <div className="bg-green-50 border border-green-100 rounded-xl p-6 space-y-3">
-                <p className="text-xs font-semibold text-green-600 uppercase tracking-wide">With Uncertainty Ledger</p>
-                <p className="text-sm font-semibold text-slate-800">VP Engineering → Board</p>
-                <div className="space-y-2 text-sm">
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-green-100">
-                    VP shares one link before the meeting. Board reads it in 2 minutes. Risk score: 42. Trajectory improving. Top cluster: data migration.
-                  </p>
-                  <p className="bg-white rounded-lg px-3 py-2 text-slate-600 border border-green-100 text-xs">
-                    Board asks the right question. VP has the answer. Credibility earned.
-                  </p>
-                </div>
-              </div>
-            </div>
-
           </div>
-        </section>
 
-        {/* How it works */}
-        <section className="bg-slate-50 py-20 px-6">
-          <div className="max-w-5xl mx-auto">
-            <p className="text-slate-500 text-sm font-semibold uppercase tracking-widest mb-4 text-center">How it works</p>
-            <h2 className="text-3xl font-bold text-slate-900 text-center mb-16">Simple. Transparent. No black boxes.</h2>
-            <div className="grid md:grid-cols-3 gap-8">
+          {/* Scenario 2 */}
+          <div className="mb-16">
+            <div className="flex items-center gap-4 mb-6">
+              <span className="font-mono text-xs" style={{ color: "#3d3d5c" }}>02</span>
+              <p className="font-bold text-sm uppercase tracking-widest" style={{ color: "#f5f5f7" }}>Engineer → Manager</p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-px" style={{ background: "#1c1c2e" }}>
+              <div style={{ background: "#0a0a14" }} className="p-8">
+                <p className="text-xs font-mono mb-4 uppercase tracking-widest" style={{ color: "#5a1a0a" }}>Without Uncertainty Ledger</p>
+                <div className="space-y-3 font-mono text-sm">
+                  <p><span style={{ color: "#3d3d5c" }}>Mgr: </span><span style={{ color: "#f5f5f7" }}>&ldquo;On track for the demo Friday?&rdquo;</span></p>
+                  <p><span style={{ color: "#3d3d5c" }}>Eng: </span><span style={{ color: "#f5f5f7" }}>&ldquo;Should be fine… there are some things we haven&apos;t fully figured out yet.&rdquo;</span></p>
+                  <p className="text-xs mt-4 pt-4" style={{ borderTop: "1px solid #1c1c2e", color: "#5a1a0a" }}>
+                    Friday arrives. It&apos;s not fine. It never was.
+                  </p>
+                </div>
+              </div>
+              <div style={{ background: "#0a150e" }} className="p-8">
+                <p className="text-xs font-mono mb-4 uppercase tracking-widest" style={{ color: "#00d97e" }}>With Uncertainty Ledger</p>
+                <div className="space-y-3 font-mono text-sm">
+                  <p><span style={{ color: "#3d3d5c" }}>Mgr: </span><span style={{ color: "#f5f5f7" }}>&ldquo;On track for the demo Friday?&rdquo;</span></p>
+                  <p><span style={{ color: "#3d3d5c" }}>Eng: </span><span style={{ color: "#f5f5f7" }}>&ldquo;3 critical unknowns in auth. Two need your decision by Tuesday or Friday is at risk.&rdquo;</span></p>
+                  <p className="text-xs mt-4 pt-4" style={{ borderTop: "1px solid #1c1c2e", color: "#4a7c63" }}>
+                    Decision made Tuesday. Demo happens Friday.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Scenario 3 */}
+          <div>
+            <div className="flex items-center gap-4 mb-6">
+              <span className="font-mono text-xs" style={{ color: "#3d3d5c" }}>03</span>
+              <p className="font-bold text-sm uppercase tracking-widest" style={{ color: "#f5f5f7" }}>VP Engineering → Board</p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-px" style={{ background: "#1c1c2e" }}>
+              <div style={{ background: "#0a0a14" }} className="p-8">
+                <p className="text-xs font-mono mb-4 uppercase tracking-widest" style={{ color: "#5a1a0a" }}>Without Uncertainty Ledger</p>
+                <p style={{ color: "#8b8ba7" }} className="leading-relaxed text-sm">
+                  20-slide deck. 3 pages of Gantt charts. Status colors that went from yellow to red with no warning. Board asks: &ldquo;What are the real risks?&rdquo; Room goes quiet.
+                </p>
+              </div>
+              <div style={{ background: "#0a150e" }} className="p-8">
+                <p className="text-xs font-mono mb-4 uppercase tracking-widest" style={{ color: "#00d97e" }}>With Uncertainty Ledger</p>
+                <p style={{ color: "#8b8ba7" }} className="leading-relaxed text-sm">
+                  VP sends one link 10 minutes before the meeting. Board reads: risk score 42, improving trajectory, primary cluster in data migration — 4 unknowns, all assigned. Board asks a smart question. VP has the answer. Credibility compounds.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── HOW IT WORKS ── */}
+      <section className="max-w-6xl mx-auto px-6 py-20">
+        <p className="text-xs font-mono uppercase tracking-widest mb-12" style={{ color: "#3d3d5c" }}>
+          — How it works
+        </p>
+        <div className="grid md:grid-cols-3 gap-px" style={{ background: "#1c1c2e" }}>
+          {[
+            {
+              n: "01",
+              title: "Log what your team doesn't know",
+              body: "Not tasks. Not bugs. Open questions and unvalidated assumptions — the things that could change everything if they resolve wrong. 30 seconds per unknown. That's the habit.",
+            },
+            {
+              n: "02",
+              title: "Watch the risk score move",
+              body: "A 0–100 score built on 40 years of watching projects fail in the same patterns. Weighted by criticality, area clustering, trajectory, and time pressure. Every point is traceable.",
+            },
+            {
+              n: "03",
+              title: "Brief anyone in 60 seconds",
+              body: "One link. No login required. Your CEO, your board, your client — reads a plain-English risk briefing with the current score, the top cluster, the trajectory, and what it means for the outcome.",
+            },
+          ].map(item => (
+            <div key={item.n} style={{ background: "#06060f" }} className="p-8">
+              <p className="font-mono text-4xl font-bold mb-6" style={{ color: "#1c1c2e" }}>{item.n}</p>
+              <p className="font-bold mb-3" style={{ color: "#f5f5f7", letterSpacing: "-0.01em" }}>{item.title}</p>
+              <p style={{ color: "#8b8ba7" }} className="text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── THE ALGORITHM ── */}
+      <section style={{ background: "#0a0a14", borderTop: "1px solid #1c1c2e", borderBottom: "1px solid #1c1c2e" }}>
+        <div className="max-w-6xl mx-auto px-6 py-20">
+          <div className="grid lg:grid-cols-2 gap-16">
+            <div>
+              <p className="text-xs font-mono uppercase tracking-widest mb-6" style={{ color: "#3d3d5c" }}>
+                — The score is explainable
+              </p>
+              <h2 className="font-bold mb-6" style={{ fontSize: "2rem", color: "#f5f5f7", letterSpacing: "-0.02em" }}>
+                Not AI. Not a black box. Expert rules — built from 40 years of watching projects fail.
+              </h2>
+              <p style={{ color: "#8b8ba7" }} className="leading-relaxed text-sm">
+                Every point in the risk score traces back to a specific unknown in your project. You can see exactly why the score is what it is. That transparency is not a feature — it&apos;s the product. A number you can&apos;t explain is a number nobody trusts.
+              </p>
+            </div>
+            <div style={{ fontFamily: "var(--font-geist-mono)", background: "#06060f", border: "1px solid #1c1c2e" }} className="p-6 text-sm">
+              <p className="mb-4 text-xs uppercase tracking-widest" style={{ color: "#3d3d5c" }}>risk_score.ts</p>
               {[
-                {
-                  icon: <AlertTriangle className="h-6 w-6 text-amber-500" />,
-                  step: "01",
-                  title: "Log what you don't know",
-                  body: "Not tasks. Not bugs. Open questions and unvalidated assumptions — the things that could change everything if they resolve wrong. Takes 30 seconds per unknown.",
-                },
-                {
-                  icon: <BarChart3 className="h-6 w-6 text-blue-500" />,
-                  step: "02",
-                  title: "Watch the risk score",
-                  body: "A transparent 0–100 score tracks whether uncertainty is growing or shrinking. Weighted by criticality, area clustering, and time to deadline. Every point is explainable.",
-                },
-                {
-                  icon: <Share2 className="h-6 w-6 text-green-500" />,
-                  step: "03",
-                  title: "Share the real picture",
-                  body: "One link. No login required. Any stakeholder — CEO, board, client — reads a plain-English risk briefing in 60 seconds. Not a dashboard. A briefing.",
-                },
-              ].map(f => (
-                <div key={f.step} className="bg-white rounded-xl p-6 space-y-4 shadow-sm">
-                  <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100">
-                      {f.icon}
-                    </div>
-                    <span className="text-3xl font-bold text-slate-100">{f.step}</span>
+                { label: "CRITICAL unknown", pts: "+20 pts", note: "blocks delivery if unresolved", color: "#ff4d00" },
+                { label: "HIGH unknown", pts: "+10 pts", note: "significant scope or timeline impact", color: "#f97316" },
+                { label: "MEDIUM unknown", pts: "+5 pts", note: "notable risk, manageable", color: "#eab308" },
+                { label: "CLUSTER penalty", pts: "+15 pts", note: "3+ unknowns in same area, avg criticality ≥ high", color: "#a855f7" },
+                { label: "TRAJECTORY", pts: "× 1.3", note: "accumulating faster than resolving (last 7 days)", color: "#3b82f6" },
+                { label: "TIME PRESSURE", pts: "× 1.2", note: "< 30 days to deadline AND score > 40", color: "#ef4444" },
+              ].map(row => (
+                <div key={row.label} className="flex items-start gap-4 py-2.5" style={{ borderBottom: "1px solid #1c1c2e" }}>
+                  <span className="font-bold w-16 flex-shrink-0 text-right" style={{ color: row.color }}>{row.pts}</span>
+                  <div>
+                    <span className="text-xs" style={{ color: "#f5f5f7" }}>{row.label}</span>
+                    <span className="text-xs ml-2" style={{ color: "#3d3d5c" }}>// {row.note}</span>
                   </div>
-                  <h3 className="font-semibold text-slate-900">{f.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{f.body}</p>
                 </div>
               ))}
+              <p className="mt-4 text-xs" style={{ color: "#3d3d5c" }}>
+                final = <span style={{ color: "#f5f5f7" }}>min(100, base × trajectory × time_pressure + clusters)</span>
+              </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* The algorithm — transparency builds trust */}
-        <section className="max-w-4xl mx-auto px-6 py-20">
-          <p className="text-slate-500 text-sm font-semibold uppercase tracking-widest mb-4 text-center">The score is explainable</p>
-          <h2 className="text-3xl font-bold text-slate-900 text-center mb-4">Not AI. Not a black box. Expert rules.</h2>
-          <p className="text-slate-500 text-center max-w-xl mx-auto mb-12">
-            The risk score is built on 40+ years of watching projects fail in predictable patterns.
-            Every point traces back to a specific unknown. You always know why.
-          </p>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {[
-              { label: "Critical unknown", pts: "+20 pts", desc: "Blocks delivery if unresolved" },
-              { label: "High unknown", pts: "+10 pts", desc: "Significant scope/timeline impact" },
-              { label: "Cluster penalty", pts: "+15 pts", desc: "3+ unknowns concentrated in one area" },
-              { label: "Trajectory warning", pts: "×1.3", desc: "Accumulating faster than resolving" },
-              { label: "Time pressure", pts: "×1.2", desc: "<30 days to deadline with elevated score" },
-              { label: "Medium unknown", pts: "+5 pts", desc: "Notable risk, manageable" },
-            ].map(item => (
-              <div key={item.label} className="flex items-center gap-4 p-4 rounded-xl border border-slate-100 bg-slate-50">
-                <span className="font-bold text-slate-900 tabular-nums w-16 text-right flex-shrink-0">{item.pts}</span>
-                <div>
-                  <p className="text-sm font-medium text-slate-800">{item.label}</p>
-                  <p className="text-xs text-slate-500">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Who it's for */}
-        <section className="bg-slate-900 text-white py-20 px-6">
-          <div className="max-w-4xl mx-auto">
-            <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-4 text-center">Who it&apos;s for</p>
-            <h2 className="text-3xl font-bold text-center mb-12">Built for the people accountable for outcomes</h2>
-            <div className="grid sm:grid-cols-3 gap-6">
-              {[
-                { role: "VP / Director of Engineering", pain: "Tired of being blindsided. Needs something defensible to show upward before the crisis — not after." },
-                { role: "Engineering Manager", pain: "Runs the team. Needs to surface blockers early enough that decisions can still be made." },
-                { role: "CTO / Founder", pain: "Responsible for delivery. Needs to know which projects are actually at risk, not which ones look bad in a status meeting." },
-              ].map(p => (
-                <div key={p.role} className="bg-slate-800 rounded-xl p-6 space-y-3">
-                  <p className="font-semibold text-white">{p.role}</p>
-                  <p className="text-slate-400 text-sm leading-relaxed">{p.pain}</p>
-                </div>
-              ))}
+      {/* ── WHO IT'S FOR ── */}
+      <section className="max-w-6xl mx-auto px-6 py-20">
+        <p className="text-xs font-mono uppercase tracking-widest mb-12" style={{ color: "#3d3d5c" }}>
+          — Built for the people accountable for outcomes
+        </p>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              role: "VP / Director of Engineering",
+              pain: "You've been in that room. The one where you're explaining why a project that was 'on track' is now three months late. You didn't have the signal early enough. You do now.",
+            },
+            {
+              role: "Engineering Manager",
+              pain: "You know which projects are in trouble before anyone else does. The problem is translating that gut feeling into something concrete enough to act on — or to escalate.",
+            },
+            {
+              role: "CTO / Founder",
+              pain: "You can't be in every project. You need to trust the signal, not the status update. A number you can interrogate beats a green checkbox you can't.",
+            },
+          ].map(p => (
+            <div key={p.role} style={{ borderTop: "2px solid #ff4d00" }} className="pt-6">
+              <p className="font-bold mb-3" style={{ color: "#f5f5f7" }}>{p.role}</p>
+              <p style={{ color: "#8b8ba7" }} className="text-sm leading-relaxed">{p.pain}</p>
             </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── FINAL CTA ── */}
+      <section style={{ background: "#0e0e17", borderTop: "1px solid #1c1c2e" }}>
+        <div className="max-w-6xl mx-auto px-6 py-24">
+          <div className="max-w-2xl">
+            <p className="text-xs font-mono uppercase tracking-widest mb-6" style={{ color: "#ff4d00" }}>
+              — Limited early access
+            </p>
+            <h2
+              className="font-bold mb-6"
+              style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", letterSpacing: "-0.03em", color: "#f5f5f7", lineHeight: 1.1 }}
+            >
+              The project that&apos;s going to surprise you is already in flight.
+            </h2>
+            <p className="mb-10 text-lg leading-relaxed" style={{ color: "#8b8ba7" }}>
+              We&apos;re opening access in small batches — and being selective about it. We want users who will tell us the hard truth. If that&apos;s you, join the list.
+            </p>
+            <WaitlistForm dark />
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Final CTA — waitlist */}
-        <section className="max-w-2xl mx-auto px-6 py-24 text-center">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4">
-            Know what you don&apos;t know.<br />Before it&apos;s too late.
-          </h2>
-          <p className="text-slate-500 mb-10 text-lg leading-relaxed">
-            We&apos;re opening access in small batches. Join the waitlist —
-            we&apos;ll reach out personally to get you set up.
-          </p>
-          <div className="flex justify-center">
-            <WaitlistForm />
+      {/* ── FOOTER ── */}
+      <footer style={{ borderTop: "1px solid #1c1c2e" }} className="px-6 py-8">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div style={{ background: "#ff4d00", width: 6, height: 6 }} />
+            <span className="text-xs font-mono uppercase tracking-widest" style={{ color: "#3d3d5c" }}>
+              Uncertainty Ledger
+            </span>
           </div>
-        </section>
-
-      </main>
-
-      <footer className="border-t border-slate-100 px-6 py-8">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-slate-400">
-            © 2026 Uncertainty Ledger. Built by engineers who&apos;ve seen what kills projects.
-          </p>
-          <Link href="/login" className="text-sm text-slate-400 hover:text-slate-600">
-            Already have an account? Sign in →
-          </Link>
+          <div className="flex items-center gap-6">
+            <Link href="/login" className="text-xs font-mono uppercase tracking-widest hover:text-white transition-colors" style={{ color: "#3d3d5c" }}>
+              Sign in
+            </Link>
+            <span className="text-xs font-mono" style={{ color: "#1c1c2e" }}>
+              Built by engineers who&apos;ve seen what kills projects.
+            </span>
+          </div>
         </div>
       </footer>
+
     </div>
   )
 }
