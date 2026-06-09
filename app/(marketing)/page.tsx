@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { WaitlistForm } from "@/components/marketing/WaitlistForm"
 import { AnimatedHero } from "@/components/marketing/AnimatedHero"
-import { ScrollReveal } from "@/components/marketing/ScrollReveal"
 
 export const metadata: Metadata = {
   title: "Know what you don't know before it's too late",
@@ -12,280 +11,276 @@ export const metadata: Metadata = {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white text-gray-900" style={{ fontFamily: "var(--font-geist-sans)" }}>
+    <div className="min-h-screen bg-white" style={{ fontFamily: "var(--font-geist-sans)" }}>
 
-      {/* ── NAV ── */}
-      <nav className="border-b border-gray-100 px-6 py-4 sticky top-0 bg-white/80 backdrop-blur-md z-50">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-red-500" />
-            <span className="font-semibold text-sm text-gray-900">Uncertainty Ledger</span>
-          </div>
-          <Link href="/login" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
-            Sign in
-          </Link>
+      {/* NAV */}
+      <nav className="px-8 py-5 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-md z-50" style={{ borderBottom: "1px solid #f0f0f0" }}>
+        <div className="flex items-center gap-2.5">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <circle cx="9" cy="9" r="3" fill="#ef4444" />
+            <circle cx="9" cy="9" r="7" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="3 2" opacity="0.4" />
+          </svg>
+          <span style={{ fontWeight: 600, fontSize: 14, color: "#111" }}>Uncertainty Ledger</span>
         </div>
+        <Link href="/login" style={{ fontSize: 13, color: "#888", textDecoration: "none" }} className="hover:text-gray-900 transition-colors">
+          Sign in
+        </Link>
       </nav>
 
-      {/* ── HERO ── */}
+      {/* HERO — left aligned, product visual right */}
       <AnimatedHero>
-        <div className="max-w-3xl mx-auto px-6 pt-32 pb-28 text-center">
-          <div className="inline-flex items-center gap-2 border border-gray-200 rounded-full px-4 py-1.5 text-xs text-gray-500 mb-10 bg-white/80 backdrop-blur-sm shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            Limited early access · Q3 2026
-          </div>
+        <div className="max-w-6xl mx-auto px-8 py-24 lg:py-32">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-          <h1
-            className="font-bold text-gray-900 mb-6"
-            style={{ fontSize: "clamp(2.6rem, 6.5vw, 5.2rem)", lineHeight: 1.08, letterSpacing: "-0.035em" }}
-          >
-            Every project failure
-            <br />you&apos;ve ever had
-            <br />was predictable.
-          </h1>
-
-          <p className="text-lg text-gray-500 mb-12 max-w-xl mx-auto leading-relaxed">
-            Not bad code. Not bad engineers. Unresolved questions that piled up silently — until month 8, when they arrived all at once.
-          </p>
-
-          <div className="flex justify-center">
-            <WaitlistForm />
-          </div>
-        </div>
-      </AnimatedHero>
-
-      {/* ── THE MOMENT ── */}
-      <section className="border-t border-gray-100 bg-gray-50/80 py-20 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <ScrollReveal>
-            <p className="text-xs text-gray-400 uppercase tracking-widest mb-6">The moment every engineering leader recognizes</p>
-            <blockquote
-              className="font-bold text-gray-900 mb-6"
-              style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.5rem)", letterSpacing: "-0.025em", lineHeight: 1.2 }}
-            >
-              &ldquo;We should have known this was coming in month 3.&rdquo;
-            </blockquote>
-            <p className="text-gray-500 max-w-xl mx-auto leading-relaxed">
-              The database that couldn&apos;t handle load. The integration that took 6 weeks. The demo that wasn&apos;t ready. The signals were always there — nobody was watching them.
-            </p>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ── TWO DEBTS ── */}
-      <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <ScrollReveal>
-            <p className="text-xs text-gray-400 uppercase tracking-widest text-center mb-12">Two kinds of debt. Only one gets tracked.</p>
-          </ScrollReveal>
-          <div className="grid md:grid-cols-2 gap-6">
-            <ScrollReveal delay={1}>
-              <div className="card-hover border border-gray-200 rounded-2xl p-8 h-full bg-white">
-                <p className="text-xs font-medium text-gray-400 uppercase tracking-widest mb-3">Technical debt</p>
-                <p className="font-bold text-gray-900 text-xl mb-3">Tracked. Measured. Debated.</p>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  Every team talks about it. Tools measure it. It&apos;s visible and arguable. It&apos;s also rarely what actually kills a project.
-                </p>
+            {/* Left: Copy + form */}
+            <div>
+              <div
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 6,
+                  background: "#fff8f0", border: "1px solid #fed7aa",
+                  borderRadius: 20, padding: "4px 12px",
+                  fontSize: 11, color: "#ea580c", fontWeight: 500,
+                  marginBottom: 28,
+                }}
+              >
+                <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
+                Early access open
               </div>
-            </ScrollReveal>
-            <ScrollReveal delay={2}>
-              <div className="card-hover border-2 border-red-100 bg-red-50/50 rounded-2xl p-8 h-full">
-                <p className="text-xs font-medium text-red-400 uppercase tracking-widest mb-3">Epistemic debt — this one kills projects</p>
-                <p className="font-bold text-gray-900 text-xl mb-3">Invisible. Unmeasured. Lethal.</p>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  Unresolved questions. Untested assumptions. Deferred decisions. Nobody tracks this. It compounds quietly. It&apos;s responsible for the majority of failures that catch leadership off guard.
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
 
-      {/* ── CONVERSATIONS ── */}
-      <section className="bg-gray-50/80 border-t border-gray-100 py-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <ScrollReveal>
-            <p className="text-xs text-gray-400 uppercase tracking-widest mb-3 text-center">This conversation happens every week</p>
-            <p className="text-center font-bold text-gray-900 text-2xl mb-14" style={{ letterSpacing: "-0.02em" }}>
-              At every company. At every level.
-            </p>
-          </ScrollReveal>
+              <h1
+                style={{
+                  fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
+                  fontWeight: 800,
+                  lineHeight: 1.05,
+                  letterSpacing: "-0.035em",
+                  color: "#0a0a0a",
+                  marginBottom: 20,
+                }}
+              >
+                Stop being surprised
+                <br />by your own projects.
+              </h1>
 
-          <div className="space-y-5">
-            {[
-              {
-                label: "CEO → VP Engineering",
-                bad: "\"Payment integration — still Q3?\" / \"We're making progress. Some challenges. The team is working through them.\"",
-                badNote: "CEO hears: \"I don't actually know.\" Trust erodes quietly.",
-                good: "\"Payment integration — still Q3?\" / \"Risk score is 67 — elevated. 5 open unknowns in integration. Sending the report now.\"",
-                goodNote: "CEO reads it in 60 seconds. Asks the right question. Trust built.",
-              },
-              {
-                label: "Engineer → Manager",
-                bad: "\"On track for the demo Friday?\" / \"Should be fine… there are some things we haven't fully figured out yet.\"",
-                badNote: "Friday arrives. It's not fine. It never was.",
-                good: "\"On track for the demo Friday?\" / \"3 critical unknowns in auth. Two need your decision by Tuesday or Friday is at risk.\"",
-                goodNote: "Decision made Tuesday. Demo happens Friday.",
-              },
-              {
-                label: "VP Engineering → Board",
-                bad: "20-slide deck. 3 pages of Gantt charts. Status colors that went from yellow to red with no warning. \"What are the real risks?\" Room goes quiet.",
-                badNote: "Nobody in the room believes the slide.",
-                good: "VP sends one link 10 minutes before the meeting. Score: 42, improving. Top cluster: data migration, 4 unknowns, all assigned.",
-                goodNote: "Board asks a smart question. VP has the answer. Credibility compounds.",
-              },
-            ].map((s, i) => (
-              <ScrollReveal key={s.label} delay={(i % 3) as 0 | 1 | 2 | 3}>
-                <div className="card-hover bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
-                  <div className="border-b border-gray-100 px-6 py-3 bg-gray-50/50">
-                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">{s.label}</p>
-                  </div>
-                  <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
-                    <div className="p-6 space-y-3">
-                      <p className="text-xs font-medium text-red-400 mb-3">Without Uncertainty Ledger</p>
-                      <p className="text-sm text-gray-600 leading-relaxed italic">{s.bad}</p>
-                      <p className="text-xs text-red-400 pt-3 border-t border-gray-100">{s.badNote}</p>
-                    </div>
-                    <div className="p-6 space-y-3">
-                      <p className="text-xs font-medium text-green-500 mb-3">With Uncertainty Ledger</p>
-                      <p className="text-sm text-gray-600 leading-relaxed italic">{s.good}</p>
-                      <p className="text-xs text-green-500 pt-3 border-t border-gray-100">{s.goodNote}</p>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+              <p style={{ fontSize: 17, color: "#555", lineHeight: 1.7, marginBottom: 12, maxWidth: 420 }}>
+                Every project failure has warning signs. They were always there.
+              </p>
+              <p style={{ fontSize: 17, color: "#555", lineHeight: 1.7, marginBottom: 36, maxWidth: 420 }}>
+                Uncertainty Ledger tracks what your team <em>doesn&apos;t know</em> — and turns it into a risk score your CEO can read in 60 seconds.
+              </p>
 
-      {/* ── HOW IT WORKS ── */}
-      <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <ScrollReveal>
-            <p className="text-xs text-gray-400 uppercase tracking-widest text-center mb-12">How it works</p>
-          </ScrollReveal>
-          <div className="grid md:grid-cols-3 gap-10">
-            {[
-              { n: "01", title: "Log what you don't know", body: "Not tasks. Not bugs. Open questions and unvalidated assumptions — the things that could change everything. 30 seconds each." },
-              { n: "02", title: "Watch the risk score", body: "A 0–100 score tracks whether uncertainty is growing or shrinking. Expert rules — not AI. Built from 40 years of project patterns. Every point is traceable." },
-              { n: "03", title: "Brief anyone in 60 seconds", body: "One link. No login. Your CEO reads a plain-English risk briefing — score, trend, biggest cluster, and what it means for the outcome." },
-            ].map((item, i) => (
-              <ScrollReveal key={item.n} delay={(i + 1) as 1 | 2 | 3}>
-                <div className="text-center">
-                  <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-5 card-hover cursor-default">
-                    <span className="text-xs font-bold text-gray-400">{item.n}</span>
-                  </div>
-                  <p className="font-semibold text-gray-900 mb-2">{item.title}</p>
-                  <p className="text-gray-500 text-sm leading-relaxed">{item.body}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SCORE EXAMPLE ── */}
-      <section className="bg-gray-50/80 border-t border-gray-100 py-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <ScrollReveal>
-            <p className="text-xs text-gray-400 uppercase tracking-widest text-center mb-4">What it looks like</p>
-            <p className="text-center font-bold text-gray-900 text-2xl mb-12" style={{ letterSpacing: "-0.02em" }}>
-              Not AI. Not a black box.<br />A number you can always explain.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={1}>
-            <div className="max-w-md mx-auto card-hover bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
-              <p className="text-xs text-gray-400 mb-6">Payment Gateway Project · Live score</p>
-              <div className="flex items-end gap-3 mb-6">
-                <span className="font-bold text-red-500" style={{ fontSize: "5.5rem", lineHeight: 1, letterSpacing: "-0.04em" }}>74</span>
-                <div className="pb-2">
-                  <p className="font-bold text-sm text-red-500 uppercase tracking-wide">High Risk</p>
-                  <p className="text-xs text-gray-400 mt-1">↑ +12 this week</p>
-                </div>
-              </div>
-              <div className="space-y-0 mb-6">
-                {[
-                  { k: "Open unknowns", v: "11", n: "3 critical" },
-                  { k: "Trend", v: "Accumulating", n: "faster than resolving" },
-                  { k: "Highest cluster", v: "Integration", n: "5 unknowns" },
-                  { k: "Days to deadline", v: "23", n: "time pressure active" },
-                ].map(row => (
-                  <div key={row.k} className="flex justify-between items-center py-2.5 border-b border-gray-100 last:border-0">
-                    <span className="text-sm text-gray-500">{row.k}</span>
-                    <div className="text-right">
-                      <span className="text-sm font-semibold text-gray-900">{row.v}</span>
-                      <span className="text-xs text-gray-400 ml-1.5">· {row.n}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="bg-red-50 rounded-xl p-4">
-                <p className="text-xs text-red-600 leading-relaxed">
-                  <span className="font-semibold">Assessment: </span>
-                  Elevated risk with 23 days remaining. The integration cluster is the primary driver. Teams with this profile at this stage historically experience significant timeline changes.
-                </p>
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ── WHO IT'S FOR ── */}
-      <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <ScrollReveal>
-            <p className="text-xs text-gray-400 uppercase tracking-widest text-center mb-12">Built for the people accountable for outcomes</p>
-          </ScrollReveal>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { role: "VP / Director of Engineering", pain: "You've been in that room — explaining why a project that was 'on track' is now three months late. You didn't have the signal early enough." },
-              { role: "Engineering Manager", pain: "You know which projects are in trouble before anyone else does. The problem is turning that gut feeling into something concrete enough to escalate." },
-              { role: "CTO / Founder", pain: "You can't be in every project. You need to trust the signal, not the status update. A number you can interrogate beats a green checkbox you can't." },
-            ].map((p, i) => (
-              <ScrollReveal key={p.role} delay={(i + 1) as 1 | 2 | 3}>
-                <div className="card-hover border-t-2 border-gray-900 pt-6 h-full">
-                  <p className="font-bold text-gray-900 mb-3">{p.role}</p>
-                  <p className="text-gray-500 text-sm leading-relaxed">{p.pain}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── FINAL CTA ── */}
-      <AnimatedHero>
-        <div className="max-w-2xl mx-auto px-6 py-28 text-center">
-          <ScrollReveal>
-            <h2
-              className="font-bold text-gray-900 mb-4"
-              style={{ fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.03em", lineHeight: 1.15 }}
-            >
-              The project that&apos;s going to
-              <br />surprise you is already in flight.
-            </h2>
-            <p className="text-gray-500 mb-10 text-lg leading-relaxed">
-              We open access in small batches and reach out personally. No automated drip. No pitch deck. Just a real conversation.
-            </p>
-            <div className="flex justify-center">
               <WaitlistForm />
             </div>
-          </ScrollReveal>
+
+            {/* Right: Floating product card */}
+            <div className="hidden lg:flex justify-center items-center">
+              <div
+                style={{
+                  background: "#fff",
+                  border: "1px solid #e8e8e8",
+                  borderRadius: 16,
+                  padding: "28px 28px 24px",
+                  width: 300,
+                  boxShadow: "0 20px 60px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04)",
+                  transform: "rotate(1.5deg)",
+                  position: "relative",
+                }}
+              >
+                <div style={{ fontSize: 11, color: "#aaa", marginBottom: 16, fontFamily: "var(--font-geist-mono)" }}>
+                  payment-gateway · live
+                </div>
+                <div style={{ display: "flex", alignItems: "flex-end", gap: 10, marginBottom: 20 }}>
+                  <span style={{ fontSize: 64, fontWeight: 800, color: "#ef4444", lineHeight: 1, letterSpacing: "-0.04em" }}>74</span>
+                  <div style={{ paddingBottom: 4 }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: "#ef4444", textTransform: "uppercase", letterSpacing: "0.06em" }}>High Risk</div>
+                    <div style={{ fontSize: 11, color: "#aaa", marginTop: 2 }}>↑ +12 this week</div>
+                  </div>
+                </div>
+                {[
+                  { k: "Open unknowns", v: "11", c: "#ef4444" },
+                  { k: "Integration cluster", v: "5 critical", c: "#f97316" },
+                  { k: "Days to deadline", v: "23", c: "#eab308" },
+                ].map(row => (
+                  <div key={row.k} style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px solid #f5f5f5" }}>
+                    <span style={{ fontSize: 12, color: "#888" }}>{row.k}</span>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: row.c }}>{row.v}</span>
+                  </div>
+                ))}
+                <div style={{ marginTop: 16, background: "#fff5f5", borderRadius: 8, padding: "10px 12px" }}>
+                  <p style={{ fontSize: 11, color: "#dc2626", lineHeight: 1.5 }}>
+                    Integration cluster is the primary driver. Teams with this profile historically experience significant timeline changes.
+                  </p>
+                </div>
+
+                {/* Second card peeking behind */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: -12, right: -12,
+                    width: "100%", height: "100%",
+                    background: "#fff",
+                    border: "1px solid #e8e8e8",
+                    borderRadius: 16,
+                    zIndex: -1,
+                    transform: "rotate(-2deg)",
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.04)",
+                  }}
+                />
+              </div>
+            </div>
+
+          </div>
         </div>
       </AnimatedHero>
 
-      {/* ── FOOTER ── */}
-      <footer className="border-t border-gray-100 px-6 py-8">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-red-500" />
-            <span className="text-sm text-gray-400">Uncertainty Ledger</span>
-          </div>
-          <Link href="/login" className="text-sm text-gray-400 hover:text-gray-600 transition-colors">
-            Already have an account? Sign in →
-          </Link>
+      {/* THE PROBLEM — full width, dark, no cards */}
+      <section style={{ background: "#0a0a0a", padding: "80px 32px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ fontSize: 13, color: "#444", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 24 }}>
+            40 years of watching projects fail
+          </p>
+          <p style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", color: "#fff", fontWeight: 700, lineHeight: 1.3, letterSpacing: "-0.02em", marginBottom: 24 }}>
+            The database that failed in month 8 was an unvalidated assumption in month 2.
+          </p>
+          <p style={{ fontSize: 16, color: "#666", lineHeight: 1.8, marginBottom: 0 }}>
+            It&apos;s not about bad code or bad engineers. It&apos;s about questions nobody tracked, assumptions nobody challenged, and decisions that kept getting deferred. They compound. Silently. Until they don&apos;t.
+          </p>
         </div>
+      </section>
+
+      {/* TWO DEBTS — asymmetric */}
+      <section style={{ padding: "80px 32px" }}>
+        <div style={{ maxWidth: 800, margin: "0 auto" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2, background: "#e8e8e8" }}>
+            <div style={{ background: "#fff", padding: "40px 36px" }}>
+              <p style={{ fontSize: 11, color: "#aaa", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Technical debt</p>
+              <p style={{ fontSize: 22, fontWeight: 700, color: "#111", lineHeight: 1.2, marginBottom: 16 }}>Everyone knows it exists.</p>
+              <p style={{ fontSize: 14, color: "#666", lineHeight: 1.7 }}>
+                Tools measure it. Sprints address it. It&apos;s visible, debatable, politically manageable. It&apos;s also rarely what kills a project.
+              </p>
+            </div>
+            <div style={{ background: "#fff8f5", padding: "40px 36px" }}>
+              <p style={{ fontSize: 11, color: "#ea580c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Epistemic debt — the one that kills projects</p>
+              <p style={{ fontSize: 22, fontWeight: 700, color: "#111", lineHeight: 1.2, marginBottom: 16 }}>Nobody even has a word for it.</p>
+              <p style={{ fontSize: 14, color: "#666", lineHeight: 1.7 }}>
+                Unresolved questions. Untested assumptions. Deferred decisions. Nobody tracks it. Nobody talks about it. It&apos;s responsible for the majority of failures that catch leadership off guard.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* THE REAL CONVERSATION — different treatment */}
+      <section style={{ background: "#f9f9f9", padding: "80px 32px", borderTop: "1px solid #efefef" }}>
+        <div style={{ maxWidth: 800, margin: "0 auto" }}>
+          <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)", fontWeight: 800, color: "#0a0a0a", lineHeight: 1.15, letterSpacing: "-0.025em", marginBottom: 12 }}>
+            This conversation kills credibility.
+            <br />It happens every week.
+          </h2>
+          <p style={{ fontSize: 15, color: "#888", marginBottom: 48 }}>At every company. At every level. And it always ends the same way.</p>
+
+          {[
+            {
+              context: "Board meeting. CEO asks the VP of Engineering.",
+              bad: { line: "\"How's the payment integration? Still Q3?\"", reply: "\"We're making progress. Some challenges. The team is working through them.\"", result: "CEO hears: I don't actually know. Meeting over." },
+              good: { reply: "\"Risk score is 67 — elevated. 5 open unknowns in integration. Sending you the report.\"", result: "CEO opens the link. Reads it in 60 seconds. Asks the right question." },
+            },
+            {
+              context: "Tuesday standup. Manager asks the lead engineer.",
+              bad: { line: "\"On track for the demo Friday?\"", reply: "\"Should be fine… there are some things we haven't fully figured out yet.\"", result: "Friday arrives. It's not fine." },
+              good: { reply: "\"3 critical unknowns in auth. Two need your decision by Wednesday or Friday is at risk.\"", result: "Decision made Wednesday. Demo happens Friday." },
+            },
+          ].map((s, i) => (
+            <div key={i} style={{ marginBottom: 32 }}>
+              <p style={{ fontSize: 11, color: "#aaa", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>{s.context}</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2, background: "#e8e8e8" }}>
+                <div style={{ background: "#fff", padding: "24px 24px" }}>
+                  <p style={{ fontSize: 11, color: "#f87171", marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.08em" }}>Without</p>
+                  <p style={{ fontSize: 13, color: "#333", lineHeight: 1.6, fontFamily: "var(--font-geist-mono)", marginBottom: 8 }}>{s.bad.line}</p>
+                  <p style={{ fontSize: 13, color: "#333", lineHeight: 1.6, fontFamily: "var(--font-geist-mono)", marginBottom: 12 }}>{s.bad.reply}</p>
+                  <p style={{ fontSize: 11, color: "#f87171" }}>{s.bad.result}</p>
+                </div>
+                <div style={{ background: "#f0fdf4", padding: "24px 24px" }}>
+                  <p style={{ fontSize: 11, color: "#22c55e", marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.08em" }}>With Uncertainty Ledger</p>
+                  <p style={{ fontSize: 13, color: "#333", lineHeight: 1.6, fontFamily: "var(--font-geist-mono)", marginBottom: 8 }}>{s.bad.line}</p>
+                  <p style={{ fontSize: 13, color: "#333", lineHeight: 1.6, fontFamily: "var(--font-geist-mono)", marginBottom: 12 }}>{s.good.reply}</p>
+                  <p style={{ fontSize: 11, color: "#16a34a" }}>{s.good.result}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* HOW IT WORKS — numbered, not grid */}
+      <section style={{ padding: "80px 32px" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto" }}>
+          <h2 style={{ fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)", fontWeight: 800, color: "#0a0a0a", letterSpacing: "-0.025em", marginBottom: 48 }}>
+            Simple enough to actually use.
+          </h2>
+          {[
+            { n: 1, t: "Log what your team doesn't know", b: "Not tasks. Not bugs. Open questions and unvalidated assumptions. The things that could change everything if they resolve wrong. 30 seconds per unknown." },
+            { n: 2, t: "Watch the risk score", b: "A 0–100 score tracks whether uncertainty is growing or shrinking. Weighted by criticality, clustering, trajectory, and time to deadline. Every point traces back to a specific unknown." },
+            { n: 3, t: "Brief anyone in 60 seconds", b: "One shareable link. No login required. Your CEO, your board, your client reads a plain-English risk briefing. The calibration comes from 40 years of watching projects fail — not from AI." },
+          ].map(item => (
+            <div key={item.n} style={{ display: "flex", gap: 24, marginBottom: 36, paddingBottom: 36, borderBottom: "1px solid #f0f0f0" }}>
+              <div style={{ width: 32, height: 32, borderRadius: "50%", border: "1.5px solid #ddd", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#aaa", fontFamily: "var(--font-geist-mono)" }}>{item.n}</span>
+              </div>
+              <div>
+                <p style={{ fontSize: 16, fontWeight: 700, color: "#111", marginBottom: 8 }}>{item.t}</p>
+                <p style={{ fontSize: 14, color: "#666", lineHeight: 1.7 }}>{item.b}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* WHO IT'S FOR — three paragraphs, not cards */}
+      <section style={{ background: "#0a0a0a", padding: "80px 32px" }}>
+        <div style={{ maxWidth: 800, margin: "0 auto" }}>
+          <p style={{ fontSize: 13, color: "#444", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 40 }}>
+            Who it&apos;s built for
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 40 }}>
+            {[
+              { role: "VP / Director of Engineering", text: "You've been in that room. Explaining why 'on track' became three months late. You didn't have the signal early enough. Now you will." },
+              { role: "Engineering Manager", text: "You know which projects are in trouble before anyone else. The problem is turning that gut feeling into something concrete enough to escalate." },
+              { role: "CTO / Founder", text: "You can't be everywhere. You need a signal you can trust — not a status update that tells you what you want to hear." },
+            ].map(p => (
+              <div key={p.role} style={{ borderTop: "1px solid #222", paddingTop: 20 }}>
+                <p style={{ fontSize: 13, fontWeight: 600, color: "#fff", marginBottom: 10 }}>{p.role}</p>
+                <p style={{ fontSize: 13, color: "#666", lineHeight: 1.7 }}>{p.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <AnimatedHero>
+        <div style={{ maxWidth: 560, margin: "0 auto", padding: "96px 32px", textAlign: "center" }}>
+          <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, color: "#0a0a0a", letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 16 }}>
+            The project that&apos;s going to surprise you is already in flight.
+          </h2>
+          <p style={{ fontSize: 16, color: "#666", lineHeight: 1.7, marginBottom: 36 }}>
+            We open access in small batches. No automated drip. No pitch deck. We reach out personally.
+          </p>
+          <WaitlistForm />
+        </div>
+      </AnimatedHero>
+
+      {/* FOOTER */}
+      <footer style={{ borderTop: "1px solid #f0f0f0", padding: "24px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+            <circle cx="9" cy="9" r="3" fill="#ef4444" />
+            <circle cx="9" cy="9" r="7" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="3 2" opacity="0.4" />
+          </svg>
+          <span style={{ fontSize: 12, color: "#aaa" }}>Uncertainty Ledger</span>
+        </div>
+        <Link href="/login" style={{ fontSize: 12, color: "#aaa", textDecoration: "none" }} className="hover:text-gray-600 transition-colors">
+          Sign in →
+        </Link>
       </footer>
 
     </div>
