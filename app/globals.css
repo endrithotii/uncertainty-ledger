@@ -66,3 +66,76 @@ body {
   color: hsl(var(--foreground));
   font-feature-settings: "rlig" 1, "calt" 1;
 }
+
+/* ── Blob animations ──────────────────────────────────── */
+@keyframes blob-1 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  25%       { transform: translate(60px, -80px) scale(1.15); }
+  50%       { transform: translate(-40px, 60px) scale(0.9); }
+  75%       { transform: translate(80px, 40px) scale(1.05); }
+}
+@keyframes blob-2 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  25%       { transform: translate(-70px, 50px) scale(1.1); }
+  50%       { transform: translate(50px, -60px) scale(0.95); }
+  75%       { transform: translate(-30px, -40px) scale(1.08); }
+}
+@keyframes blob-3 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33%       { transform: translate(40px, 70px) scale(1.12); }
+  66%       { transform: translate(-60px, -30px) scale(0.88); }
+}
+@keyframes blob-4 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  40%       { transform: translate(-50px, -70px) scale(1.2); }
+  80%       { transform: translate(70px, 30px) scale(0.9); }
+}
+
+.blob-1 { animation: blob-1 18s ease-in-out infinite; }
+.blob-2 { animation: blob-2 22s ease-in-out infinite; }
+.blob-3 { animation: blob-3 16s ease-in-out infinite; }
+.blob-4 { animation: blob-4 20s ease-in-out infinite; }
+
+/* ── Scroll reveal ────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ── Micro-interactions ───────────────────────────────── */
+.card-hover {
+  transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease;
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+.btn-primary {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.btn-primary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* ── Floating particles ───────────────────────────────── */
+@keyframes float-1 { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-18px) rotate(8deg)} }
+@keyframes float-2 { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-12px) rotate(-6deg)} }
+@keyframes float-3 { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-22px) rotate(12deg)} }
+
+.particle { position: absolute; border-radius: 2px; pointer-events: none; }
+.particle-f1 { animation: float-1 6s ease-in-out infinite; }
+.particle-f2 { animation: float-2 8s ease-in-out infinite; }
+.particle-f3 { animation: float-3 5s ease-in-out infinite; }
