@@ -41,12 +41,12 @@ export function WaitlistForm({ dark = false }: { dark?: boolean }) {
   }
 
   const inputClass = dark
-    ? "w-full bg-[#0e0e17] border border-[#1c1c2e] text-[#f5f5f7] placeholder-[#3d3d5c] px-4 py-3 text-sm focus:outline-none focus:border-[#ff4d00] transition-colors font-mono"
-    : "w-full bg-white border border-[#d1d5db] text-[#111827] placeholder-[#9ca3af] px-4 py-3 text-sm focus:outline-none focus:border-[#ff4d00] transition-colors"
+    ? "w-full bg-[#0e0e17] border border-[#1c1c2e] text-[#f5f5f7] placeholder-[#3d3d5c] px-4 py-3 text-sm focus:outline-none focus:border-[#ff4d00] transition-colors rounded-xl"
+    : "w-full bg-white border border-gray-200 text-gray-900 placeholder-gray-400 px-4 py-3 text-sm focus:outline-none focus:border-gray-900 transition-colors rounded-xl shadow-sm"
 
   const selectClass = dark
-    ? "w-full bg-[#0e0e17] border border-[#1c1c2e] text-[#8b8ba7] px-4 py-3 text-sm focus:outline-none focus:border-[#ff4d00] transition-colors appearance-none cursor-pointer"
-    : "w-full bg-white border border-[#d1d5db] text-[#6b7280] px-4 py-3 text-sm focus:outline-none focus:border-[#ff4d00] transition-colors appearance-none cursor-pointer"
+    ? "w-full bg-[#0e0e17] border border-[#1c1c2e] text-[#8b8ba7] px-4 py-3 text-sm focus:outline-none focus:border-[#ff4d00] transition-colors appearance-none cursor-pointer rounded-xl"
+    : "w-full bg-white border border-gray-200 text-gray-500 px-4 py-3 text-sm focus:outline-none focus:border-gray-900 transition-colors appearance-none cursor-pointer rounded-xl shadow-sm"
 
   return (
     <form onSubmit={handleSubmit} className="space-y-2 w-full max-w-md">
@@ -72,7 +72,7 @@ export function WaitlistForm({ dark = false }: { dark?: boolean }) {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-[#ff4d00] text-white py-3 px-6 text-sm font-bold tracking-wide hover:bg-[#e63d00] transition-colors disabled:opacity-50 uppercase"
+        className={`w-full py-3 px-6 text-sm font-semibold transition-colors disabled:opacity-50 rounded-full ${dark ? "bg-[#ff4d00] text-white hover:bg-[#e63d00] uppercase tracking-wide" : "bg-gray-900 text-white hover:bg-gray-700"}`}
       >
         {loading ? "JOINING…" : "REQUEST EARLY ACCESS →"}
       </button>
